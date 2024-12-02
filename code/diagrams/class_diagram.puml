@@ -1,0 +1,305 @@
+@startuml
+class "Coord" as C_0005582419654179098890
+class C_0005582419654179098890 {
++Coord(int dimension, int * coords) : void
++Coord(const Coord & other) : void
++~Coord() : void
+..
++operator=(const Coord & other) : Coord &
+..
++operator<(const Coord & other) const : bool
++operator==(const Coord & other) const : bool
+..
++Get_direction(Coord & other) : int
++Get_neighbors() : std::vector<Coord>
++To_string() const : std::string
+__
+-coords : int *
+-dimension : int
+}
+class "Position<T>" as C_0007147829937533914341
+class C_0007147829937533914341 {
+__
+}
+abstract "IMap<T>" as C_0008194924907142178845
+abstract C_0008194924907142178845 {
++~IMap() : void
+..
+{abstract} +Collapse_at(Coord coord) = 0 : void
+{abstract} +Get_position(Coord coord) = 0 : std::optional<std::reference_wrapper<Position<T>>>
+{abstract} +Is_solved() = 0 : bool
+{abstract} +Lowest_entropy() = 0 : const Coord
+__
+}
+abstract "ITile<T>" as C_0014802903071936888603
+abstract C_0014802903071936888603 {
++~ITile() : void
+..
+{abstract} +Check_constraints(ITile<T> * other_tile, int direction) = 0 : bool
+{abstract} +Output() = 0 : T
+__
+}
+class "ITile<std::string>" as C_0008349718121941374747
+class C_0008349718121941374747 {
+__
+}
+class "IMap<std::string>" as C_0011123095770108382752
+class C_0011123095770108382752 {
+__
+}
+class "Position<std::string>" as C_0014254206783310681034
+class C_0014254206783310681034 {
++Position(Coord coord, std::vector<ITile<basic_string<char>> *> options, IMap<basic_string<char>> * map) : void
+..
++Collapse() : void
++Get_coord() const : Coord
++Get_entropy() const : int
++Get_options() : const std::vector<ITile<basic_string<char>> *> &
++Output() const : std::vector<basic_string<char>>
++Remove_options(Coord & from, std::vector<ITile<basic_string<char>> *> & remaining_tiles) : void
+__
+-coord : Coord
+-map : IMap<basic_string<char>> *
+-options : std::vector<ITile<basic_string<char>> *>
+}
+class "ITile<int>" as C_0003909797387182394397
+class C_0003909797387182394397 {
+__
+}
+class "IMap<int>" as C_0009335862775691710069
+class C_0009335862775691710069 {
+__
+}
+class "Position<int>" as C_0001894728620401945255
+class C_0001894728620401945255 {
++Position(Coord coord, std::vector<ITile<int> *> options, IMap<int> * map) : void
+..
++Collapse() : void
++Get_coord() const : Coord
++Get_entropy() const : int
++Get_options() : const std::vector<ITile<int> *> &
++Output() const : std::vector<int>
++Remove_options(Coord & from, std::vector<ITile<int> *> & remaining_tiles) : void
+__
+-coord : Coord
+-map : IMap<int> *
+-options : std::vector<ITile<int> *>
+}
+class "Map2D<T>" as C_0003726005844236308137
+class C_0003726005844236308137 {
++Map2D(int width, int height, std::vector<ITile<T> *> & tileSet) : void
+..
++Collapse_at(Coord coord) : void
++Get_position(Coord coord) : std::optional<std::reference_wrapper<Position<T>>>
++Is_solved() : bool
++Lowest_entropy() : const Coord
++Output() : std::vector<std::vector<T>>
+__
+-height : int
+-positions : std::vector<Position<T>>
+-width : int
+}
+class "Map2D<std::string>" as C_0009696190563752465785
+class C_0009696190563752465785 {
++Map2D(int width, int height, std::vector<ITile<basic_string<char>> *> & tileSet) : void
+..
++Collapse_at(Coord coord) : void
++Get_position(Coord coord) : std::optional<std::reference_wrapper<Position<basic_string<char>>>>
++Is_solved() : bool
++Lowest_entropy() : const Coord
++Output() : std::vector<std::vector<basic_string<char>>>
+__
+-height : int
+-positions : std::vector<Position<basic_string<char>>>
+-width : int
+}
+class "Map2D<int>" as C_0013615805521455186838
+class C_0013615805521455186838 {
++Map2D(int width, int height, std::vector<ITile<int> *> & tileSet) : void
+..
++Collapse_at(Coord coord) : void
++Get_position(Coord coord) : std::optional<std::reference_wrapper<Position<int>>>
++Is_solved() : bool
++Lowest_entropy() : const Coord
++Output() : std::vector<std::vector<int>>
+__
+-height : int
+-positions : std::vector<Position<int>>
+-width : int
+}
+abstract "IPrinter<T>" as C_0005537440462534708561
+abstract C_0005537440462534708561 {
+{abstract} +Print() = 0 : T
+__
+}
+class "IPrinter<std::string>" as C_0000961160570686629991
+class C_0000961160570686629991 {
+__
+}
+class "UnicodePrinter" as C_0014941409460440423570
+class C_0014941409460440423570 {
++UnicodePrinter(Map2D<std::string> & map, int row_length) : void
+..
++Print() : std::string
+__
+-map : Map2D<std::string> &
+-row_length : int
+}
+class "Pixel" as C_0000968797757612716721
+class C_0000968797757612716721 {
++Pixel() : void
++Pixel(uint8_t red, uint8_t green, uint8_t blue) : void
+..
++operator==(const Pixel & other) const : bool
+..
++get_blue() const : uint8_t
++get_green() const : uint8_t
++get_red() const : uint8_t
+__
+-blue : uint8_t
+-green : uint8_t
+-red : uint8_t
+}
+class "Image" as C_0010778985571113791344
+class C_0010778985571113791344 {
++Image(int width, int height, std::vector<Pixel> & pixels) : void
++Image(int columns, int rows, std::vector<Image> & images) : void
+..
++Get_height() const : int
++Get_pixel(int x, int y) const : Pixel
++Get_width() const : int
+__
+-height : int
+-pixels : std::vector<std::vector<Pixel>>
+-width : int
+}
+class "Tile2d<T>" as C_0005849032771510490132
+class C_0005849032771510490132 {
++Tile2d(int up, int right, int down, int left) : void
++~Tile2d() : void
+..
++Check_constraints(ITile<T> * other_tile, int direction) : bool
++Get_sockets() : std::vector<int>
+__
+-sockets : int[4]
+}
+class "Tile2d<Image>" as C_0010319586376534379039
+class C_0010319586376534379039 {
+__
+}
+class "ImageTile" as C_0010105828742709997672
+class C_0010105828742709997672 {
++ImageTile(int up, int right, int down, int left, Image image) : void
+..
++Check_constraints(ITile<Image> * other_tile, int direction) : bool
++Output() : Image
+-check_image(Image & other) : bool
+__
+-image : Image
+}
+class "ImageFactory" as C_0004431263724729317243
+class C_0004431263724729317243 {
++ImageFactory() = deleted : void
++ImageFactory(ImageFactory & other) = deleted : void
+..
++operator=(const ImageFactory &) = deleted : void
+..
+{static} +assemble_image(std::vector<std::vector<Image>> images, int rows, int cols) : std::optional<Image>
+{static} -get_average_pixel(std::vector<Pixel> pixels) : Pixel
+{static} +load_bitmap(std::string path) : std::optional<Image>
+{static} +save_bitmap(std::string path, const Image & image) : void
+__
+}
+class "Tile2d<std::string>" as C_0011653957690285696100
+class C_0011653957690285696100 {
+__
+}
+class "UnicodeTile" as C_0002406470457863762571
+class C_0002406470457863762571 {
++UnicodeTile(int up, int right, int down, int left, std::string glyph) : void
+..
++Output() : std::string
+__
+-glyph : std::string
+}
+class "WaveFunctionCollapse<T>" as C_0005101799184748236721
+class C_0005101799184748236721 {
++WaveFunctionCollapse(IMap<T> * map, IPrinter<T> * printer, unsigned int seed) : void
+..
++Solve() : T
+__
+-map : IMap<T> *
+-printer : IPrinter<T> *
+-seed : unsigned int
+}
+class "BitmapFileHeader" as C_0013048057460012407264
+class C_0013048057460012407264 {
+__
++data_offset : int32_t
++file_size : int32_t
++header : char[2]
++reserved : int32_t
+}
+class "BitmapInfoHeader" as C_0009048089696163921634
+class C_0009048089696163921634 {
+__
++bits_per_pixel : int16_t
++colors_used : int32_t
++compression : int32_t
++header_size : int32_t
++height : int32_t
++image_size : int32_t
++important_colors : int32_t
++planes : int16_t
++width : int32_t
++x_pixels_per_meter : int32_t
++y_pixels_per_meter : int32_t
+}
+C_0008349718121941374747 ..|> C_0014802903071936888603
+C_0011123095770108382752 ..|> C_0008194924907142178845
+C_0014254206783310681034 ..|> C_0007147829937533914341
+C_0014254206783310681034 o-- C_0005582419654179098890 : -coord
+C_0014254206783310681034 --> C_0014802903071936888603 : -options
+C_0014254206783310681034 --> C_0011123095770108382752 : -map
+C_0014254206783310681034 --> C_0008194924907142178845 : -map
+C_0003909797387182394397 ..|> C_0014802903071936888603
+C_0009335862775691710069 ..|> C_0008194924907142178845
+C_0001894728620401945255 ..|> C_0007147829937533914341
+C_0001894728620401945255 o-- C_0005582419654179098890 : -coord
+C_0001894728620401945255 --> C_0014802903071936888603 : -options
+C_0001894728620401945255 --> C_0009335862775691710069 : -map
+C_0001894728620401945255 --> C_0008194924907142178845 : -map
+C_0003726005844236308137 o-- C_0007147829937533914341 : -positions
+C_0008194924907142178845 <|-- C_0003726005844236308137
+
+C_0009696190563752465785 ..|> C_0003726005844236308137
+C_0011123095770108382752 <|-- C_0009696190563752465785
+
+C_0009696190563752465785 o-- C_0014254206783310681034 : -positions
+C_0013615805521455186838 ..|> C_0003726005844236308137
+C_0009335862775691710069 <|-- C_0013615805521455186838
+
+C_0013615805521455186838 o-- C_0001894728620401945255 : -positions
+C_0000961160570686629991 ..|> C_0005537440462534708561
+C_0014941409460440423570 --> C_0009696190563752465785 : -map
+C_0014941409460440423570 --> C_0003726005844236308137 : -map
+C_0000961160570686629991 <|-- C_0014941409460440423570
+
+C_0010778985571113791344 o-- C_0000968797757612716721 : -pixels
+C_0010778985571113791344 <.. C_0004431263724729317243 : +<<friend>>
+C_0010778985571113791344 <.. C_0010105828742709997672 : +<<friend>>
+C_0014802903071936888603 <|-- C_0005849032771510490132
+
+C_0010319586376534379039 ..|> C_0005849032771510490132
+C_0010105828742709997672 o-- C_0010778985571113791344 : -image
+C_0010319586376534379039 <|-- C_0010105828742709997672
+
+C_0011653957690285696100 ..|> C_0005849032771510490132
+C_0011653957690285696100 <|-- C_0002406470457863762571
+
+C_0005101799184748236721 --> C_0008194924907142178845 : -map
+C_0005101799184748236721 --> C_0005537440462534708561 : -printer
+
+'Generated with clang-uml, version 0.5.5
+'LLVM version clang version 18.1.8
+@enduml

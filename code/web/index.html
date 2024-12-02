@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WFC</title>
+    <script src="/build/app.js"></script>
+    <style>
+    img {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    </style>
+  </head>
+  <body>
+    <script>
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    let img = null;
+    let url = null;
+    Module.onRuntimeInitialized = () => {
+      Module.createImage(10, 10, getRandomInt(0, 1000));
+      const bmpData = Module.FS.readFile('/output.bmp');
+      const bmp = new Blob([bmpData], { type: 'image/bmp' });
+      url = URL.createObjectURL(bmp);
+      img = document.createElement('img');
+      img.src = url;
+      document.body.appendChild(img);
+    };
+
+    function updateCircuit() {
+      Module.nextStep();
+      const bmpData = Module.FS.readFile('/output.bmp');
+      const bmp = new Blob([bmpData], { type: 'image/bmp' });
+      if (url) {
+        URL.revokeObjectURL(url);
+      }
+      url = URL.createObjectURL(bmp);
+      img.src = url;
+    }
+    </script>
+    <input type="number" id="seed"></input>
+    <button onclick="updateCircuit()">Click me</button>
+    <br/>
+    <a href="3d.html">3D</a>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+compilation_database_dir: .
+output_directory: diagrams
+diagrams:
+  class_diagram:
+    type: class
+    glob:
+      - src/*.cpp
+    exclude:
+      relationships:
+        - dependency
+      namespaces:
+        - std
