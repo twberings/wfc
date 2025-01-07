@@ -1,9 +1,9 @@
 #pragma once
 
 #include "wfc/itile.hpp"
+#include <array>
 #include <memory>
 #include <vector>
-#include <array>
 
 class Socket {
 public:

@@ -11,7 +11,7 @@ Image::Image(int width, int height, std::vector<Pixel> &pixels)
   }
 }
 
-Image Image::Get_rotated() const{
+Image Image::Get_rotated() const {
   std::vector<Pixel> rotated_pixels(width * height);
 
   for (int row = 0; row < height; row++) {
@@ -20,4 +20,18 @@ Image Image::Get_rotated() const{
     }
   }
   return Image(height, width, rotated_pixels);
+}
+
+bool Image::operator==(const Image &other) const {
+  if (width != other.Get_width() || height != other.Get_height()) {
+    return false;
+  }
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (pixels[i][j] != other.Get_pixel(j, i)) {
+        return false;
+      }
+    }
+  }
+  return true;
 }

@@ -17,6 +17,7 @@ public:
   int Get_height() const { return height; }
   Pixel Get_pixel(int x, int y) const { return pixels[y][x]; }
   Image Get_rotated() const;
+  bool operator==(const Image &other) const;
 
   friend class ImageTile;
   friend class ImageFactory;

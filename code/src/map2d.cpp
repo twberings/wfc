@@ -7,7 +7,8 @@
 #include <vector>
 
 template <class T>
-Map2D<T>::Map2D(int width, int height, std::vector<std::shared_ptr<ITile<T> >> &tileSet)
+Map2D<T>::Map2D(int width, int height,
+                std::vector<std::shared_ptr<ITile<T>>> &tileSet)
     : width(width), height(height) {
   for (int j = 0; j < height; j++) {
     for (int i = 0; i < width; i++) {
@@ -62,6 +63,14 @@ template <class T> void Map2D<T>::Collapse_at(Coord coord) {
   if (result) {
     Position<T> &position = result.value().get();
     position.Collapse();
+  }
+}
+
+template <class T> void Map2D<T>::Collapse_to(Coord coord, T &content) {
+  auto result = Get_position(coord);
+  if (result) {
+    Position<T> &position = result.value().get();
+    position.Collapse_to(content);
   }
 }
 

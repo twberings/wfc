@@ -85,7 +85,7 @@ It is possible to seed the random number generator to get the same results.
 
 # Image generation
 
-To general algorithm to generate images is nearly identical to the one used to generate unicode maps. The only difference being that image tiles are able to be rotated to create more permutations. Other than that the algorithm abstracts out the output, meaning that image tiles can be used in the same way as unicode tiles. The updated design includes classes to load, save and manipulate images.
+The general algorithm to generate images is nearly identical to the one used to generate unicode maps. The only difference being that image tiles are able to be rotated to create more permutations. Other than that the algorithm abstracts out the output, meaning that image tiles can be used in the same way as unicode tiles. The updated design includes classes to load, save and manipulate images.
 
 ## Image results
 

@@ -33,9 +33,27 @@ template <class T> void Position<T>::Collapse() {
   }
   int random_index = rand() % options.size();
   std::shared_ptr<ITile<T>> chosen_tile = options[random_index];
+  Collapse_to(chosen_tile);
+}
+
+template <class T> void Position<T>::Collapse_to(T &content) {
+  std::shared_ptr<ITile<T>> chosen_tile = nullptr;
+  for (auto option : options) {
+    if (option->Output() == content) {
+      chosen_tile = option;
+    }
+  }
+  if (chosen_tile == nullptr) {
+    throw std::runtime_error("Error: No option with given content");
+  }
+  Collapse_to(chosen_tile);
+}
+
+template <class T>
+void Position<T>::Collapse_to(std::shared_ptr<ITile<T>> tile) {
   std::vector<std::shared_ptr<ITile<T>>> removed_tiles = options;
   options.clear();
-  options.push_back(chosen_tile);
+  options.push_back(tile);
   for (const auto &neighbor_coord : coord.Get_neighbors()) {
     auto result = map->Get_position(neighbor_coord);
     if (result.has_value()) {
@@ -49,7 +67,7 @@ template <class T>
 void Position<T>::Remove_options(
     Coord &from, std::vector<std::shared_ptr<ITile<T>>> &remaining_tiles) {
   size_t nr_options = options.size();
-  std::vector<std::shared_ptr<ITile<T> >> tiles_to_remove;
+  std::vector<std::shared_ptr<ITile<T>>> tiles_to_remove;
   for (auto option : options) {
     bool possible = false;
     for (auto &tile : remaining_tiles) {

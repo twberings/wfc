@@ -81,21 +81,21 @@ std::vector<Coord> Coord::Get_neighbors() {
 
 int Coord::Get_direction(Coord &other) {
   if (dimension != other.dimension) {
-    throw std::invalid_argument("Dimensions do not match");
+    throw std::invalid_argument("Error: Dimensions do not match");
   }
   int axis = 0;
   bool different = false;
   for (int i = 0; i < dimension; i++) {
     if (coords[i] != other.coords[i]) {
       if (different) {
-        throw std::invalid_argument("Coords are not neighbors");
+        throw std::invalid_argument("Error: Coords are not neighbors");
       }
       axis = i;
       different = true;
     }
   }
   if (!different) {
-    throw std::invalid_argument("Coords are not neighbors");
+    throw std::invalid_argument("Error: Coords are not neighbors");
   }
 
   if (coords[axis] == other.coords[axis] + 1) {
@@ -105,7 +105,7 @@ int Coord::Get_direction(Coord &other) {
     return (axis * 2) + 1;
   }
 
-  throw std::invalid_argument("Coords are not neighbors");
+  throw std::invalid_argument("Error: Coords are not neighbors");
 }
 
 Coord::~Coord() { delete[] coords; }

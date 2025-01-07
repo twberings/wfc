@@ -12,7 +12,7 @@ public:
   Image Print() override {
     auto result = ImageFactory::assemble_image(map.Output(), rows, cols);
     if (!result) {
-      throw std::runtime_error("Failed to assemble image");
+      throw std::runtime_error("Error: Failed to assemble image");
     }
     return *result;
   };

@@ -9,6 +9,7 @@ public:
   bool operator==(const Pixel &other) const {
     return red == other.red && green == other.green && blue == other.blue;
   }
+  bool operator!=(const Pixel &other) const { return !(*this == other); }
   uint8_t get_red() const { return red; }
   uint8_t get_green() const { return green; }
   uint8_t get_blue() const { return blue; }
