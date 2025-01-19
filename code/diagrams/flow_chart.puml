@@ -1,0 +1,13 @@
+@startuml
+start
+while (Is map solved (all positions have 1 option)) is (no)
+  :Get position with lowest entropy (least number of options);
+  :Collapse position to likeliest tile;
+  while (Amount of options on this position decreased) is (yes)
+    :Get neighbouring positions;
+    :Update available options;
+  endwhile (no)
+  :Wait for all tiles to update;
+endwhile (yes)
+stop
+@enduml
